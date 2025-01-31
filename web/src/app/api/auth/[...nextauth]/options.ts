@@ -1,7 +1,7 @@
-import { LOGIN_URL } from "@/lib/apiAuthRoutes";
 import axios from "axios";
-import { Account, AuthOptions, ISODateString, User } from "next-auth";
+import { LOGIN_URL } from "@/lib/apiAuthRoutes";
 import { JWT } from "next-auth/jwt";
+import { Account, AuthOptions, ISODateString, User } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
 export interface CustomUser {
@@ -26,6 +26,9 @@ export const authOptions: AuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      httpOptions: {
+        timeout: 8000, // Increase timeout to 10 seconds
+      },
       authorization: {
         params: {
           prompt: "consent",
@@ -53,10 +56,14 @@ export const authOptions: AuthOptions = {
           image: user?.image,
         };
         const { data } = await axios.post(LOGIN_URL, payload);
-      } catch (error) {}
-      console.log("The user data is", user);
-      console.log("The user data is", account);
-      return true;
+        user.id = data?.user?.id?.toString();
+        user.token = data?.user?.token;
+        return true;
+      } catch (error) {
+        console.log("The user data is", user);
+        console.log("The user data is", account);
+        return false;
+      }
     },
     async jwt({ token, user }) {
       if (user) {

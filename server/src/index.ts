@@ -1,7 +1,7 @@
 import express, { Application, Request, Response } from "express";
 import "dotenv/config";
 import cors from "cors";
-import router from "./routes/index.js";
+import Router from "./routes/index.js";
 const app: Application = express();
 const PORT = process.env.PORT || 7000;
 
@@ -15,6 +15,6 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 // * Routes
-app.use("/api", router);
+app.use("/api", Router);
 
 app.listen(PORT, () => console.log(`Server is running on PORT ${PORT}`));
