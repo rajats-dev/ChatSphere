@@ -7,10 +7,9 @@ export default function UserAvatar({
   name: string;
   image?: string;
 }) {
-  console.log(image);
   return (
     <Avatar>
-      <AvatarImage src={`${image}`} />
+      <AvatarImage src={image} />
       <AvatarFallback>{name[0]}</AvatarFallback>
     </Avatar>
   );
