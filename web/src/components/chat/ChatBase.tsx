@@ -1,11 +1,9 @@
 "use client";
-import React, { useEffect, useMemo, useState } from "react";
-import { v4 as uuidV4 } from "uuid";
-import { Button } from "../ui/button";
-import { getSocket } from "@/socket.config";
+import React, { useEffect, useState } from "react";
 import ChatSidebar from "./ChatSidebar";
 import ChatNav from "./ChatNav";
 import ChatUserDialog from "./ChatUserDialog";
+import Chat from "./Chat";
 
 function ChatBase({
   group,
@@ -26,27 +24,6 @@ function ChatBase({
       setChatUser(pData);
     }
   }, [group.id]);
-  // let socket = useMemo(() => {
-  //   const socket = getSocket();
-  //   socket.auth = {
-  //     room: groupId,
-  //   };
-  //   return socket.connect();
-  // }, []);
-
-  // useEffect(() => {
-  //   socket.on("message", (data) => {
-  //     console.log("The Socket message is", data);
-  //   });
-
-  //   return () => {
-  //     socket.close();
-  //   };
-  // }, []);
-
-  // const handleClick = () => {
-  //   socket.emit("message", { name: "rajat", id: uuidV4() });
-  // };
 
   return (
     <div className="flex">
@@ -59,7 +36,7 @@ function ChatBase({
         )}
 
         {/* Messages */}
-        {/* <Chats oldMessages={oldMessages} group={group} chatUser={chatUser} /> */}
+        <Chat oldMessages={oldMessages} group={group} chatUser={chatUser} />
       </div>
     </div>
   );

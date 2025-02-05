@@ -1,5 +1,5 @@
 import { io, Socket } from "socket.io-client";
-import Env from "./lib/env";
+import Env from "./env";
 
 let socket: Socket;
 
